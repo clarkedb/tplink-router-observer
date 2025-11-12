@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  router-collector:
+    build: .
+    container_name: router-stats-collector
+    environment:
+      - ROUTER_IP=${ROUTER_IP}
+      - ROUTER_PASSWORD=${ROUTER_PASSWORD}
+      - COLLECTION_INTERVAL=${COLLECTION_INTERVAL:-60}
+      - DATASTORE_TYPE=${DATASTORE_TYPE:-file}
+      - DATA_FILE_PATH=/app/data/router_stats.jsonl
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    networks:
+      - router-network
+
+networks:
+  router-network:
+    driver: bridge
