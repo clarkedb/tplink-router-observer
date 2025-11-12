@@ -1,0 +1,29 @@
+[project]
+name = "router-stats-collector"
+version = "0.1.0"
+description = "A modern Python app to collect TP-Link router statistics"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["tplinkrouterc6u>=1.0.0", "python-dotenv>=1.0.0"]
+
+[dependency-groups]
+dev = [{ include-group = "lint" }, { include-group = "test" }, "ipython>=9.7.0"]
+lint = ["ruff"]
+test = ["pytest>=8.4.2", "pytest-asyncio>=1.2.0", "pytest-cov>=4.1.0"]
+
+[project.scripts]
+router-collector = "router_stats_collector.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.coverage.run]
+source = ["router_stats_collector"]
+omit = ["tests/*"]
